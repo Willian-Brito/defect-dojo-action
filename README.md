@@ -2,6 +2,8 @@
 
 Esta GitHub Action integra-se com o [DefectDojo](https://www.defectdojo.org/) para criar produtos, engajamentos e importar relatórios de vulnerabilidades automaticamente.
 
+O DefectDojo é uma ferramenta [open-source](https://github.com/DefectDojo/django-DefectDojo) para **gestão centralizada de vulnerabilidades**. Como uma plataforma que integra resultados de múltiplos scanners (SAST, DAST, SCA) e organiza esses achados para facilitar a gestão e priorização dos riscos.
+
 ## 📌 **Recursos**
 - Cria um produto no DefectDojo (caso não exista)
 - Gera um engajamento no produto
