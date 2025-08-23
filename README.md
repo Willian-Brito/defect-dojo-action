@@ -28,10 +28,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do código
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Executar DefectDojo Integration
-        uses: michelleamesquita/defect-dojo-action@main
+        uses: Willian-Brito/defect-dojo-action@main
         with:
           url_base: "http://seu-defectdojo.com/api/v2/"
           username: "seu-usuario"
