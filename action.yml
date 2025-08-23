@@ -1,5 +1,5 @@
 name: 'DefectDojo Integration'
-author: 'appsec'
+author: 'willian-brito'
 description: 'DefectDojo Integration to GitHub Action'
 
 inputs:
