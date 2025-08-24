@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run DefectDojo Integration
-        uses: willian-brito/defect-dojo-action@main
+        uses: Willian-Brito/defect-dojo-action@main
         with:
           url_base: "http://seu-defectdojo.com/api/v2/"
           username: "seu-usuario"
@@ -41,4 +41,5 @@ jobs:
           scan_type: "SARIF"
           product_name: "Meu Projeto"
           description: "Projeto de teste no DefectDojo"
+          origin: "third-party"
           token: ${{ secrets.DEFECTDOJO_TOKEN }}

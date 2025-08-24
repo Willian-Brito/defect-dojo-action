@@ -19,6 +19,8 @@ inputs:
     required: true
   description:
     required: true
+  origin:
+    required: true
   token:
     required: true
 
@@ -55,6 +57,7 @@ runs:
           --file "${{ inputs.file }}" \
           --scan_type "${{ inputs.scan_type }}" \
           --product_name "${{ inputs.product_name }}" \
-          --description "${{ inputs.description }}" \          
+          --description "${{ inputs.description }}" \
+          --origin "${{ inputs.origin }}" \
           --json "${{ inputs.token }}"
       shell: bash
