@@ -41,5 +41,5 @@ jobs:
           scan_type: "SARIF"
           product_name: "Meu Projeto"
           description: "Projeto de teste no DefectDojo"
-          origin: ""third party library""
+          origin: "third party library"
           token: ${{ secrets.DEFECTDOJO_TOKEN }}
