@@ -6,7 +6,7 @@ import os
 
 
 parser = argparse.ArgumentParser(
-        usage='%(prog)s --url_base URL_BASE --username USERNAME --source_url SOURCE_URL --tool TOOL --file FILE --scan_type SCAN_TYPE --product_name PRODUCT_NAME --description DESCRIPTION --origin ORIGIN --json JSON',
+        usage='%(prog)s --url_base URL_BASE --username USERNAME --source_url SOURCE_URL --tool TOOL --file FILE --scan_type SCAN_TYPE --product_name PRODUCT_NAME --description DESCRIPTION --json JSON',
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
     
@@ -18,7 +18,6 @@ parser.add_argument("-f", "--file",type=str, required=True)
 parser.add_argument("-s", "--scan_type",type=str, required=False)
 parser.add_argument("-p", "--product_name",type=str, required=True)
 parser.add_argument("-d", "--description",type=str, required=True)
-parser.add_argument("-o", "--origin",type=str, required=True)
 parser.add_argument("-j", "--json",type=str, required=True)
 
 
@@ -32,9 +31,7 @@ FILE = args.file
 SCAN_TYPE = args.scan_type
 PRODUCT_NAME = args.product_name
 DESCRIPTION = args.description
-ORIGIN = args.origin
 JSON = args.json
-
 
 
 def auth_token(JSON):
@@ -44,19 +41,17 @@ def auth_token(JSON):
     """
 
     json_obj = {}
-    json_obj['Authorization'] = "Token "+JSON
-
+    json_obj['Authorization'] = "Token "+JSON    
     return json_obj
     
 
 
-def create_product(PRODUCT_NAME, DESCRIPTION, ORIGIN, URL_BASE):
+def create_product(PRODUCT_NAME, DESCRIPTION, URL_BASE):
     """"
     Create new project in Defect Dojo
 
     :param PRODUCT_NAME: Product's name
-    :param description: Product's description
-    :param origin: Product's origin
+    :param description: Product's description    
     :param URL_BASE: Defect Dojo's url
 
     """
@@ -69,8 +64,7 @@ def create_product(PRODUCT_NAME, DESCRIPTION, ORIGIN, URL_BASE):
     "name":PRODUCT_NAME,
     "description": DESCRIPTION,
     "prod_type":1,
-    "sla_configuration":1,
-    "origin": ORIGIN
+    "sla_configuration":1,    
     }
 
     return requests.post(url, headers=headers, data=data)

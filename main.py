@@ -3,8 +3,7 @@ import defectdojo
 # 1️⃣ Tenta criar o produto primeiro
 response_product = defectdojo.create_product(
     defectdojo.PRODUCT_NAME,
-    defectdojo.DESCRIPTION,
-    defectdojo.ORIGIN,
+    defectdojo.DESCRIPTION,    
     defectdojo.URL_BASE
 )
 
@@ -25,8 +24,7 @@ elif response_product.status_code == 400:
         # 3️⃣ Se a busca falhar, cria novamente
         response_product = defectdojo.create_product(
             defectdojo.PRODUCT_NAME,
-            defectdojo.DESCRIPTION,
-            defectdojo.ORIGIN,
+            defectdojo.DESCRIPTION,            
             defectdojo.URL_BASE
         )
 
