@@ -196,10 +196,16 @@ def get_engagement_code_id(product_id,TOOL,URL_BASE):
     url = URL_BASE+f'engagements/?product={product_id}'
 
     response = requests.get(url, headers=headers)
+    id = None
+
     if len(response.json()['results']) != 0:
         for i in range(len(response.json()['results'])):
             if response.json()['results'][i]['name'] == TOOL:
                 id=int(response.json()['results'][i]['id'])
+
+    if id is None:
+        raise ValueError(f"Engagement '{TOOL}' não encontrado para o produto {product_id} no DefectDojo.")
+    
     return id
 
 
