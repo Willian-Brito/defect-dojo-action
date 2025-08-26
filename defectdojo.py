@@ -176,7 +176,7 @@ def create_engagement(product_id,USERNAME,SOURCE_URL,URL_BASE,TOOL):
 
     if response.status_code == 201:
         print('Engagement was created successfully')
-
+        return response.json()
     else:
         print(f'Failed to create project: {response.content}')
 
@@ -191,11 +191,8 @@ def get_engagement_code_id(product_id,TOOL,URL_BASE):
 
     """
 
-    headers =  auth_token(JSON)
-
-    url = URL_BASE+f'engagements/?product={product_id}'
-
-    response = requests.get(url, headers=headers)
+    response = get_engagement(product_id,URL_BASE)
+    
     id = None
 
     if len(response.json()['results']) != 0:
@@ -207,6 +204,36 @@ def get_engagement_code_id(product_id,TOOL,URL_BASE):
         raise ValueError(f"Engagement '{TOOL}' não encontrado para o produto {product_id} no DefectDojo.")
     
     return id
+
+def get_or_create_engagement_id(product_id, TOOL, URL_BASE, USERNAME, SOURCE_URL):
+    """
+    Retorna o engagement_id para um TOOL.
+    - Se já existir, retorna o ID.
+    - Se não existir, cria e retorna o novo ID.
+    """
+
+    headers = auth_token(JSON)
+    url = URL_BASE + f"engagements/?product={product_id}"
+
+    response = requests.get(url, headers=headers)
+
+    # 1️⃣ Tenta encontrar o engagement pelo nome da TOOL
+    for result in response.json().get("results", []):
+        if result.get("name") == TOOL:
+            return int(result["id"])
+
+    # 2️⃣ Se não encontrou, cria um novo engagement
+    print(f"📌 Engagement '{TOOL}' não encontrado. Criando um novo...")
+
+    new_engagement = create_engagement(
+        product_id,
+        USERNAME,
+        SOURCE_URL,
+        URL_BASE,
+        TOOL
+    )
+
+    return int(new_engagement["id"])
 
 
 def get_scan_type(FILE):

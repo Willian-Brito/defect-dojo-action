@@ -43,28 +43,38 @@ else:
 
 # 4️⃣ Busca o engagement existente ou cria um novo
 response_engagement = defectdojo.get_engagement(product_id, defectdojo.URL_BASE)
-
-if len(response_engagement.json().get('results', [])) == 0:
-    print("📌 Nenhum engagement encontrado. Criando um novo...")
-    defectdojo.create_engagement(
-        product_id,
-        defectdojo.USERNAME,
-        defectdojo.SOURCE_URL,
-        defectdojo.URL_BASE,
-        defectdojo.TOOL
-    )
-else:
-    print("✅ Engagement já existente encontrado.")
-
-# 5️⃣ Obtém o ID do engagement
+engagement_id = None
 try:
-    engagement_id = defectdojo.get_engagement_code_id(product_id, defectdojo.TOOL, defectdojo.URL_BASE)
-    print(f"✅ ID do Engagement: {engagement_id}")
+    if len(response_engagement.json().get('results', [])) == 0:
+        print("📌 Nenhum engagement encontrado. Criando um novo...")
+        created_engagement = defectdojo.create_engagement(
+            product_id,
+            defectdojo.USERNAME,
+            defectdojo.SOURCE_URL,
+            defectdojo.URL_BASE,
+            defectdojo.TOOL
+        )
+        engagement_id = created_engagement["id"]
+    else:
+        try:
+            engagement_id = defectdojo.get_engagement_code_id(
+                product_id, defectdojo.TOOL, defectdojo.URL_BASE
+            )
+        except ValueError:
+            print("📌 Engagement existe mas não corresponde ao TOOL. Criando um novo...")
+            created_engagement = defectdojo.create_engagement(
+                product_id,
+                defectdojo.USERNAME,
+                defectdojo.SOURCE_URL,
+                defectdojo.URL_BASE,
+                defectdojo.TOOL
+            )
+            engagement_id = created_engagement["id"]
 except ValueError as e:
-    print(f"❌ Erro ao buscar o engagement: {e}")
+    print(f"❌ Engagement '{defectdojo.TOOL}' não encontrado para o produto {product_id} no DefectDojo: {e}")
     exit(1)
 
-# 6️⃣ Enviar os findings (vulnerabilidades) para o engagement
+# 5️⃣ Enviar os findings (vulnerabilidades) para o engagement
 print("🚀 Enviando findings (vulnerabilidades) para o Defect Dojo...")
 defectdojo.create_finding(engagement_id, defectdojo.FILE, defectdojo.URL_BASE)
 print("✅ Findings enviados com sucesso!")
