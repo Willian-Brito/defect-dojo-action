@@ -246,6 +246,8 @@ def get_scan_type(FILE):
 
     if FILE.split(".")[1] == 'sarif':
         return'SARIF'
+    
+    return SCAN_TYPE
 
 
 def create_finding(engagement_id,FILE,URL_BASE):
@@ -265,12 +267,13 @@ def create_finding(engagement_id,FILE,URL_BASE):
     scan_type = get_scan_type(FILE)
 
     data = {
-    'active': True,
-    'verified': True,
-    'scan_type': scan_type,
-    'minimum_severity': 'Low',
-    'engagement': engagement_id,
-    'skip_duplicates': False
+        'active': True,
+        'verified': True,
+        'scan_type': scan_type,
+        'minimum_severity': 'Low',
+        'engagement': engagement_id,
+        'skip_duplicates': False,
+        'close_old_findings': True
     }
 
     FILE = os.path.join(os.getcwd(), args.file)
